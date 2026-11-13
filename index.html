@@ -9,11 +9,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #ffffff;
-            --text-color: #1a1d20;
-            --accent-color: #03458a;
-            --surface-color: #f8f9fa;
+            --bg-color: #fafafc;
+            --surface-color: #f0f2f5;
             --border-color: #e2e6ec;
+            --text-color: #1a1d20;
+            --muted-color: #656d76;
+            --accent-color: #0969da;
         }
 
         * {
@@ -31,7 +32,7 @@
             color: var(--text-color);
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 300;
-            line-height: 1.4;
+            line-height: 1.6;
             overflow-x: hidden;
         }
 
@@ -47,17 +48,23 @@
             left: 0;
             width: 100%;
             z-index: 100;
+            background-color: rgba(250, 250, 252, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
             padding: 1.5rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            mix-blend-mode: difference;
-            color: #ffffff;
         }
 
         .nav-logo {
             font-family: 'Instrument Serif', serif;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             letter-spacing: 0.05em;
         }
 
@@ -67,533 +74,469 @@
             font-size: 0.85rem;
             letter-spacing: 0.15em;
             text-transform: uppercase;
-            font-weight: 500;
+            color: var(--muted-color);
         }
 
-        /* HERO - FULL SCREEN IMAGE */
-        .hero-visual {
-            position: relative;
-            height: 100vh;
-            width: 100%;
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* MAIN */
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            padding: 8rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* HERO VISUAL (Minimalista, menos texto) */
+        .hero {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .hero-bg {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -2;
-            filter: brightness(0.65);
-        }
-
-        .hero-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 100%);
-            z-index: -1;
-        }
-
-        .hero-content {
             text-align: center;
-            color: #ffffff;
+            padding-top: 12rem;
+            gap: 3rem;
+            border-bottom: none;
         }
 
         .hero-title {
             font-family: 'Instrument Serif', serif;
-            font-size: clamp(4rem, 12vw, 10rem);
+            font-size: clamp(3.5rem, 8vw, 7rem);
             line-height: 0.9;
             font-weight: 400;
-            letter-spacing: -0.02em;
+            max-width: 900px;
         }
 
         .hero-title i {
             font-style: italic;
+            color: var(--accent-color);
         }
-
+        
         .hero-subtitle {
-            font-size: clamp(1rem, 2vw, 1.5rem);
-            letter-spacing: 0.3em;
+            font-size: 1rem;
+            letter-spacing: 0.15em;
             text-transform: uppercase;
+            color: var(--muted-color);
             margin-top: 1rem;
-            font-weight: 400;
         }
 
-        /* PROJECTS - IMAGE GRID */
-        .projects-gallery {
+        /* PROYECTOS - GALERÍA CON GRADIENTES */
+        .projects-section {
+            padding-top: 2rem;
+            border-bottom: none;
+        }
+        
+        .projects-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 2px;
-            background-color: var(--bg-color);
+            gap: 4rem 2rem;
         }
 
-        .gallery-item {
-            position: relative;
-            aspect-ratio: 16 / 10;
-            overflow: hidden;
+        .project-card {
             display: block;
         }
 
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        .project-thumb {
+            position: relative;
+            aspect-ratio: 16 / 10;
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 1.2rem;
         }
 
-        .item-overlay {
+        .project-thumb .thumb-fill {
             position: absolute;
             inset: 0;
-            background: rgba(3, 69, 138, 0.85);
+            transition: transform 0.6s ease;
+        }
+
+        .project-card:hover .thumb-fill {
+            transform: scale(1.04);
+        }
+
+        .thumb-1 { background: linear-gradient(135deg, #d0e1fd 0%, #b3d1ff 70%, #80b3ff 100%); } /* Selva Sena */
+        .thumb-2 { background: linear-gradient(135deg, #e1ecf4 0%, #c6e0f5 100%); } /* Respeto Irrestricto */
+        .thumb-3 { background: linear-gradient(135deg, #d8dee9 0%, #e5e9f0 100%); } /* La madre de Ernesto */
+        .thumb-4 { background: linear-gradient(135deg, #e3eaf2 0%, #cce0ff 100%); } /* Botas Walker */
+
+        .project-thumb .play {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 64px;
+            height: 64px;
+            margin: -32px 0 0 -32px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: border-color 0.3s ease, background-color 0.3s ease;
+        }
+
+        .project-thumb .play::after {
+            content: '';
+            border-style: solid;
+            border-width: 8px 0 8px 13px;
+            border-color: transparent transparent transparent var(--accent-color);
+            margin-left: 4px;
+        }
+
+        .project-card:hover .play {
+            border-color: var(--accent-color);
+            background-color: #ffffff;
+        }
+
+        .project-meta {
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            color: #ffffff;
-            padding: 2rem;
+            gap: 0.5rem;
         }
 
-        .gallery-item:hover img {
-            transform: scale(1.05);
+        .project-title {
+            font-size: 1.8rem;
+            line-height: 1.1;
+            font-weight: 500;
         }
 
-        .gallery-item:hover .item-overlay {
-            opacity: 1;
+        .project-card:hover .project-title {
+            color: var(--accent-color);
         }
 
-        .item-title {
-            font-family: 'Instrument Serif', serif;
-            font-size: clamp(2rem, 4vw, 3.5rem);
-            line-height: 1;
-            margin-bottom: 0.5rem;
-            font-weight: 400;
-            transform: translateY(20px);
-            transition: transform 0.4s ease;
-        }
-
-        .item-role {
-            font-size: 0.85rem;
-            letter-spacing: 0.2em;
+        .project-info {
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
             text-transform: uppercase;
-            transform: translateY(20px);
-            transition: transform 0.4s ease;
-            transition-delay: 0.1s;
+            color: var(--accent-color);
+        }
+        
+        .project-desc {
+            font-size: 0.95rem;
+            color: var(--muted-color);
+            max-width: 95%;
         }
 
-        .gallery-item:hover .item-title,
-        .gallery-item:hover .item-role {
-            transform: translateY(0);
-        }
-
-        /* CASE STUDY: GESTIÓN DE PRODUCCIÓN */
+        /* CASO DE ESTUDIO (Gestión de Producción) */
         .case-study {
-            padding: 8rem 2rem;
-            background-color: var(--surface-color);
-            display: flex;
-            justify-content: center;
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 4rem;
+            margin: 6rem 0;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.03);
+            border: 1px solid var(--border-color);
         }
 
-        .case-container {
-            max-width: 1200px;
-            width: 100%;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
+        .case-header {
+            margin-bottom: 3rem;
+            text-align: center;
         }
 
-        .case-header .section-label {
+        .case-label {
             font-size: 0.75rem;
             letter-spacing: 0.2em;
             text-transform: uppercase;
             color: var(--accent-color);
             margin-bottom: 1rem;
             font-weight: 600;
-            display: block;
         }
 
-        .case-header h2 {
+        .case-title {
             font-family: 'Instrument Serif', serif;
-            font-size: clamp(3rem, 5vw, 4.5rem);
-            line-height: 0.95;
-            margin-bottom: 2rem;
-            color: var(--text-color);
+            font-size: clamp(2.5rem, 4vw, 3.5rem);
+            line-height: 1;
         }
 
-        .case-header h2 i {
-            color: var(--accent-color);
-            font-style: italic;
-        }
-
-        .case-description {
-            font-size: 1.1rem;
-            color: #4a5568;
-            margin-bottom: 2rem;
-            line-height: 1.6;
-        }
-
-        .case-metrics {
+        .budget-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 2rem;
-            margin-top: 3rem;
-            border-top: 1px solid var(--border-color);
-            padding-top: 2rem;
+            margin-bottom: 3rem;
         }
 
-        .metric h4 {
-            font-family: 'Instrument Serif', serif;
-            font-size: 2.5rem;
-            color: var(--accent-color);
-            margin-bottom: 0.25rem;
-            font-weight: 400;
+        .budget-stat {
+            background-color: var(--surface-color);
+            padding: 2rem;
+            border-radius: 6px;
+            text-align: center;
         }
 
-        .metric p {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: #718096;
+        .stat-value {
+            font-size: 2rem;
             font-weight: 500;
-        }
-
-        /* Visual Budget Breakdown */
-        .budget-visuals {
-            background: #ffffff;
-            padding: 3rem;
-            border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-        }
-
-        .budget-title {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            font-weight: 600;
-            margin-bottom: 2rem;
             color: var(--text-color);
+            margin-bottom: 0.5rem;
         }
 
-        .bar-container {
-            margin-bottom: 1.5rem;
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--muted-color);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
-        .bar-header {
+        .budget-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .bar-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .bar-label-group {
             display: flex;
             justify-content: space-between;
-            font-size: 0.85rem;
-            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-color);
             font-weight: 500;
         }
 
-        .bar-header span:last-child {
-            color: var(--accent-color);
-            font-family: monospace;
-            font-size: 0.9rem;
-        }
-
-        .bar-track {
+        .bar-bg {
             width: 100%;
-            height: 8px;
-            background-color: #edf2f7;
-            border-radius: 4px;
+            height: 12px;
+            background-color: var(--surface-color);
+            border-radius: 10px;
             overflow: hidden;
         }
 
         .bar-fill {
             height: 100%;
             background-color: var(--accent-color);
-            border-radius: 4px;
-        }
-
-        .fill-1 { width: 79%; background-color: #03458a; } /* Equipo Técnico */
-        .fill-2 { width: 15%; background-color: #3b82f6; } /* Rental */
-        .fill-3 { width: 6%; background-color: #93c5fd; } /* Catering */
-
-        .rental-details {
-            margin-top: 3rem;
-            padding-top: 2rem;
-            border-top: 1px solid var(--border-color);
+            border-radius: 10px;
         }
         
-        .rental-details h5 {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: #718096;
-            margin-bottom: 1rem;
-        }
+        .bar-fill.eq { background-color: #4a8ddb; }
+        .bar-fill.cat { background-color: #8bbff4; }
 
-        .rental-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .tag {
-            background-color: #f7fafc;
-            border: 1px solid var(--border-color);
-            padding: 0.4rem 0.8rem;
-            font-size: 0.75rem;
-            border-radius: 20px;
-            color: #4a5568;
-        }
-
-        /* ABOUT - MASSIVE IMAGE & BOLD STATEMENT */
-        .about-visual {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            min-height: 100vh;
-            background-color: var(--bg-color);
-        }
-
-        .about-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .about-content {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 4rem;
-        }
-
-        .about-statement {
-            font-family: 'Instrument Serif', serif;
-            font-size: clamp(3rem, 6vw, 5rem);
-            line-height: 0.95;
-            color: var(--accent-color);
-            max-width: 600px;
-        }
-
-        /* CONTACT - MASSIVE TYPOGRAPHY */
-        .contact-visual {
-            min-height: 80vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+        /* CONTACTO (Visual) */
+        .contact {
             text-align: center;
-            background-color: var(--surface-color);
-            padding: 2rem;
+            border-bottom: none;
+            padding-top: 4rem;
         }
 
-        .contact-heading {
-            font-family: 'Instrument Serif', serif;
-            font-size: clamp(5rem, 15vw, 12rem);
-            line-height: 0.8;
-            color: var(--text-color);
-            margin-bottom: 1rem;
+        .contact .section-title {
+            font-size: clamp(3rem, 7vw, 6rem);
+            margin-bottom: 2rem;
         }
 
         .contact-mail {
-            font-size: clamp(1.5rem, 4vw, 3rem);
+            display: inline-block;
+            font-family: 'Instrument Serif', serif;
+            font-style: italic;
+            font-size: clamp(2rem, 4vw, 3rem);
             color: var(--accent-color);
-            text-decoration: none;
-            transition: opacity 0.3s ease;
+            border-bottom: 2px solid var(--accent-color);
+            margin-bottom: 4rem;
+            transition: color 0.3s, border-color 0.3s;
         }
 
         .contact-mail:hover {
-            opacity: 0.7;
+            color: var(--text-color);
+            border-color: var(--text-color);
         }
 
-        /* FOOTER */
         footer {
-            padding: 2rem;
-            text-align: center;
-            font-size: 0.75rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--text-color);
-            background-color: var(--surface-color);
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
             display: flex;
             justify-content: space-between;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted-color);
+            border-top: 1px solid var(--border-color);
         }
 
         /* RESPONSIVE */
         @media (max-width: 900px) {
-            .projects-gallery, .case-container, .about-visual {
+            .budget-grid {
                 grid-template-columns: 1fr;
             }
-            .about-visual {
-                grid-template-rows: 60vh auto;
+            .case-study {
+                padding: 2rem;
             }
-            .nav-links {
-                display: none;
-            }
-            .about-content, .case-study {
-                padding: 3rem 2rem;
-            }
-            .case-metrics {
+            .projects-grid {
                 grid-template-columns: 1fr;
-                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .nav-container {
+                padding: 1.2rem;
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+            .hero {
+                padding-top: 9rem;
+            }
+            footer {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
             }
         }
     </style>
 </head>
 <body>
     <header>
-        <a href="#inicio" class="nav-logo">Victoria MXC</a>
-        <div class="nav-links">
-            <a href="#proyectos">Proyectos</a>
-            <a href="#gestion">Gestión</a>
-            <a href="#sobre-mi">Sobre mí</a>
-            <a href="#contacto">Contacto</a>
-        </div>
+        <nav class="nav-container">
+            <a href="#inicio" class="nav-logo">Victoria MXC</a>
+            <div class="nav-links">
+                <a href="#proyectos">Proyectos</a>
+                <a href="#gestion">Gestión</a>
+                <a href="#contacto">Contacto</a>
+            </div>
+        </nav>
     </header>
 
     <main>
-        <!-- HERO FULL SCREEN -->
-        <section class="hero-visual" id="inicio">
-            <img src="https://images.unsplash.com/photo-1590608889981-d1012351d11b?auto=format&fit=crop&q=80&w=2000" class="hero-bg" alt="Set de filmación">
-            <div class="hero-overlay"></div>
-            <div class="hero-content">
-                <h1 class="hero-title">VICTORIA <i>MXC</i></h1>
-                <p class="hero-subtitle">Project Management & Producción</p>
+        <!-- HERO VISUAL -->
+        <section class="hero" id="inicio">
+            <h1 class="hero-title">Producción, <i>gestión</i> y montaje audiovisual</h1>
+            <p class="hero-subtitle">Dirección · Project Management · Postproducción</p>
+        </section>
+
+        <!-- PROYECTOS - GALERÍA (Formato Miniaturas) -->
+        <section id="proyectos" class="projects-section">
+            <div class="projects-grid">
+                
+                <!-- Proyecto 1: Selva Sena -->
+                <a href="https://www.youtube.com/watch?v=Hqn_BkR9i1s" target="_blank" rel="noopener" class="project-card">
+                    <div class="project-thumb">
+                        <div class="thumb-fill thumb-1"></div>
+                        <span class="play"></span>
+                    </div>
+                    <div class="project-meta">
+                        <h3 class="project-title">Retrato Documental - Selva Sena</h3>
+                        <span class="project-info">Productora Ejecutiva · 2026</span>
+                        <p class="project-desc">Liderazgo y gestión integral del proyecto (UNQ). Planificación, logística y armado de roles técnicos en set.</p>
+                    </div>
+                </a>
+
+                <!-- Proyecto 2: Respeto Irrestricto -->
+                <a href="https://www.youtube.com/watch?v=Y72ZDaXrDQA" target="_blank" rel="noopener" class="project-card">
+                    <div class="project-thumb">
+                        <div class="thumb-fill thumb-2"></div>
+                        <span class="play"></span>
+                    </div>
+                    <div class="project-meta">
+                        <h3 class="project-title">Respeto Irrestricto</h3>
+                        <span class="project-info">Producción y Edición · 2026</span>
+                        <p class="project-desc">Control del flujo de trabajo en postproducción y montaje conceptual, asegurando la calidad del entregable.</p>
+                    </div>
+                </a>
+
+                <!-- Proyecto 3: La madre de Ernesto -->
+                <a href="https://www.youtube.com/watch?v=ept4sCq83Y8" target="_blank" rel="noopener" class="project-card">
+                    <div class="project-thumb">
+                        <div class="thumb-fill thumb-3"></div>
+                        <span class="play"></span>
+                    </div>
+                    <div class="project-meta">
+                        <h3 class="project-title">La madre de Ernesto</h3>
+                        <span class="project-info">Dirección y Producción · 2026</span>
+                        <p class="project-desc">Cortometraje de Ficción. Planificación operativa del rodaje y supervisión general técnica y artística.</p>
+                    </div>
+                </a>
+
+                <!-- Proyecto 4: Oficios y manipulación (NUEVO) -->
+                <a href="https://www.youtube.com/watch?v=JJDHQhziA6k" target="_blank" rel="noopener" class="project-card">
+                    <div class="project-thumb">
+                        <div class="thumb-fill thumb-4"></div>
+                        <span class="play"></span>
+                    </div>
+                    <div class="project-meta">
+                        <h3 class="project-title">Fabricación de botas walker</h3>
+                        <span class="project-info">Cámara y Montaje · TILA UNQ · 2026</span>
+                        <p class="project-desc">Registro audiovisual del proceso artesanal. Narración visual de oficio, manipulación técnica y variedad de angulaciones.</p>
+                    </div>
+                </a>
+
             </div>
         </section>
 
-        <!-- IMAGE-FIRST PROJECT GALLERY -->
-        <section id="proyectos">
-            <div class="projects-gallery">
-                <a href="https://www.youtube.com/watch?v=Hqn_BkR9i1s" target="_blank" rel="noopener" class="gallery-item">
-                    <img src="https://img.youtube.com/vi/Hqn_BkR9i1s/maxresdefault.jpg" alt="Selva Sena Documental">
-                    <div class="item-overlay">
-                        <h2 class="item-title">Selva Sena</h2>
-                        <p class="item-role">Retrato Documental / Producción</p>
-                    </div>
-                </a>
-                <a href="#" class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1601506521937-0121a7fc2a6b?auto=format&fit=crop&q=80&w=1200" alt="Videoclip">
-                    <div class="item-overlay">
-                        <h2 class="item-title">Videoclip</h2>
-                        <p class="item-role">Dirección</p>
-                    </div>
-                </a>
-                <a href="#" class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1534951474654-87823058c487?auto=format&fit=crop&q=80&w=1200" alt="Documental">
-                    <div class="item-overlay">
-                        <h2 class="item-title">Cortometraje</h2>
-                        <p class="item-role">Producción Ejecutiva</p>
-                    </div>
-                </a>
-                <a href="#" class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&q=80&w=1200" alt="Contenido de Marca">
-                    <div class="item-overlay">
-                        <h2 class="item-title">Contenido de Marca</h2>
-                        <p class="item-role">Montaje</p>
-                    </div>
-                </a>
-            </div>
-        </section>
-
-        <!-- NUEVA SECCIÓN: CASO DE ESTUDIO (GESTIÓN DE PRODUCCIÓN) -->
-        <section class="case-study" id="gestion">
-            <div class="case-container">
+        <!-- CASO DE ESTUDIO: GESTIÓN DE PRODUCCIÓN -->
+        <section id="gestion">
+            <div class="case-study">
                 <div class="case-header">
-                    <span class="section-label">Caso de Estudio</span>
-                    <h2>Gestión de Producción y <i>Costos</i></h2>
-                    <p class="case-description">
-                        Análisis de viabilidad financiera y estructuración presupuestaria para cortometraje de ficción. Mi rol como Project Manager abarcó la investigación de mercado, el relevamiento de necesidades técnicas y la negociación estratégica con proveedores de rental.
+                    <p class="case-label">Caso de Estudio</p>
+                    <h2 class="case-title">Gestión de Producción y <i>Estructura de Costos</i></h2>
+                    <p class="project-desc" style="margin: 1.5rem auto 0; text-align: center; max-width: 700px;">
+                        Planificación presupuestaria y análisis de viabilidad para un cortometraje de ficción de 7 jornadas. Gestión de contrataciones de rental, control de recursos humanos y optimización de presupuesto general.
                     </p>
-                    <p class="case-description">
-                        Se implementó un esquema de costos enfocado en la optimización operativa, asegurando el cumplimiento normativo (cargas sociales) y el control de imprevistos sobre un plan de rodaje intensivo.
-                    </p>
-                    
-                    <div class="case-metrics">
-                        <div class="metric">
-                            <h4>$18.6M</h4>
-                            <p>Presupuesto Total (ARS)</p>
-                        </div>
-                        <div class="metric">
-                            <h4>7</h4>
-                            <p>Días de Rodaje</p>
-                        </div>
-                        <div class="metric">
-                            <h4>8</h4>
-                            <p>Roles Técnicos</p>
-                        </div>
+                </div>
+
+                <div class="budget-grid">
+                    <div class="budget-stat">
+                        <div class="stat-value">7</div>
+                        <div class="stat-label">Jornadas de Rodaje</div>
+                    </div>
+                    <div class="budget-stat">
+                        <div class="stat-value">13</div>
+                        <div class="stat-label">Días de Postproducción</div>
+                    </div>
+                    <div class="budget-stat">
+                        <div class="stat-value">$18.6M</div>
+                        <div class="stat-label">Presupuesto (con imprevistos)</div>
                     </div>
                 </div>
 
-                <div class="budget-visuals">
-                    <h3 class="budget-title">Estructura Presupuestaria (Agosto 2026)</h3>
+                <div class="budget-bars">
+                    <div class="bar-item">
+                        <div class="bar-label-group">
+                            <span>Equipo Técnico (Honorarios y Cargas Sociales)</span>
+                            <span>78.9%</span>
+                        </div>
+                        <div class="bar-bg"><div class="bar-fill" style="width: 79%;"></div></div>
+                    </div>
                     
-                    <!-- Rubro 1 -->
-                    <div class="bar-container">
-                        <div class="bar-header">
-                            <span>Equipo Técnico & Realización (Talento y Cargas Sociales)</span>
-                            <span>79%</span>
+                    <div class="bar-item">
+                        <div class="bar-label-group">
+                            <span>Recursos Técnicos (Rental: Cámara, Ópticas, Luces)</span>
+                            <span>15.1%</span>
                         </div>
-                        <div class="bar-track">
-                            <div class="bar-fill fill-1"></div>
-                        </div>
+                        <div class="bar-bg"><div class="bar-fill eq" style="width: 15%;"></div></div>
                     </div>
 
-                    <!-- Rubro 2 -->
-                    <div class="bar-container">
-                        <div class="bar-header">
-                            <span>Recursos Técnicos (Rental de Equipamiento)</span>
-                            <span>15%</span>
+                    <div class="bar-item">
+                        <div class="bar-label-group">
+                            <span>Catering y Logística Operativa</span>
+                            <span>5.9%</span>
                         </div>
-                        <div class="bar-track">
-                            <div class="bar-fill fill-2"></div>
-                        </div>
-                    </div>
-
-                    <!-- Rubro 3 -->
-                    <div class="bar-container">
-                        <div class="bar-header">
-                            <span>Operativa (Catering y Logística)</span>
-                            <span>6%</span>
-                        </div>
-                        <div class="bar-track">
-                            <div class="bar-fill fill-3"></div>
-                        </div>
-                    </div>
-
-                    <div class="rental-details">
-                        <h5>Equipamiento Negociado (Proveedores de Rental)</h5>
-                        <div class="rental-tags">
-                            <span class="tag">Canon 5D Mark IV</span>
-                            <span class="tag">Ópticas Prime (35mm / 85mm)</span>
-                            <span class="tag">Sennheiser EW 100-G3 / ME 66</span>
-                            <span class="tag">Aputure Amaran 300c RGB</span>
-                            <span class="tag">Nanguang Fresnel</span>
-                            <span class="tag">Gimbal Ronin RS3</span>
-                        </div>
+                        <div class="bar-bg"><div class="bar-fill cat" style="width: 6%;"></div></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ABOUT -->
-        <section id="sobre-mi" class="about-visual">
-            <img src="https://images.unsplash.com/photo-1603525164293-8b77efcfb102?auto=format&fit=crop&q=80&w=1000" alt="Victoria MXC - Retrato" class="about-image">
-            <div class="about-content">
-                <h2 class="about-statement">Organizar el caos.<br><i>Crear impacto.</i></h2>
-            </div>
-        </section>
-
-        <!-- CONTACT -->
-        <section id="contacto" class="contact-visual">
-            <h2 class="contact-heading">Hablemos.</h2>
+        <!-- CONTACTO VISUAL -->
+        <section class="contact" id="contacto">
+            <h2 class="section-title">¿Hablamos?</h2>
             <a href="mailto:vic.mxc@hotmail.com" class="contact-mail">vic.mxc@hotmail.com</a>
+            
+            <div style="display: flex; justify-content: center; gap: 2rem; margin-top: 2rem;">
+                <a href="https://www.linkedin.com/in/mvcarril/" target="_blank" rel="noopener" style="color: var(--text-color); font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.85rem;">LinkedIn</a>
+                <a href="https://www.youtube.com/@vicmaxacre" target="_blank" rel="noopener" style="color: var(--text-color); font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.85rem;">YouTube</a>
+            </div>
         </section>
     </main>
 
     <footer>
         <span>© 2026 Victoria MXC</span>
-        <span>Buenos Aires, Arg</span>
+        <span>Portfolio · Project Management & Producción Audiovisual</span>
     </footer>
 </body>
 </html>
