@@ -8,13 +8,18 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
+        /* 
+           NUEVA PALETA DE COLORES: 
+           Modo Oscuro Cálido (Dark Charcoal & Sage)
+        */
         :root {
-            --bg-color: #fafafc;
-            --surface-color: #f0f2f5;
-            --border-color: #e2e6ec;
-            --text-color: #1a1d20;
-            --muted-color: #656d76;
-            --accent-color: #0969da;
+            --bg-color: #1a1918;         /* Gris carbón muy oscuro y cálido */
+            --surface-color: #242220;    /* Superficie un poco más clara para las tarjetas */
+            --border-color: #383532;     /* Bordes sutiles */
+            --text-color: #e8e6e3;       /* Blanco roto / Hueso para el texto */
+            --muted-color: #a09d98;      /* Gris medio para texto secundario */
+            --accent-color: #92a37b;     /* Verde salvia claro para destacar en fondo oscuro */
+            --accent-hover: #b5c99a;     /* Verde salvia más brillante para hovers */
         }
 
         * {
@@ -34,12 +39,35 @@
             font-weight: 300;
             line-height: 1.6;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased; /* Suaviza las fuentes en Mac/iOS */
+            -moz-osx-font-smoothing: grayscale;
         }
 
         a {
             color: inherit;
             text-decoration: none;
+            transition: color 0.3s ease;
         }
+
+        /* ANIMACIONES SUAVES */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-on-load {
+            animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
 
         /* HEADER */
         header {
@@ -48,9 +76,11 @@
             left: 0;
             width: 100%;
             z-index: 100;
-            background-color: rgba(250, 250, 252, 0.85);
+            background-color: rgba(26, 25, 24, 0.85); /* Adaptado al modo oscuro */
             backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border-color);
+            transition: background-color 0.3s ease;
         }
 
         .nav-container {
@@ -66,6 +96,7 @@
             font-family: 'Instrument Serif', serif;
             font-size: 1.6rem;
             letter-spacing: 0.05em;
+            color: var(--text-color);
         }
 
         .nav-links {
@@ -75,6 +106,7 @@
             letter-spacing: 0.15em;
             text-transform: uppercase;
             color: var(--muted-color);
+            font-weight: 500;
         }
 
         .nav-links a:hover {
@@ -93,23 +125,25 @@
             border-bottom: 1px solid var(--border-color);
         }
 
-        /* HERO VISUAL (Minimalista, menos texto) */
+        /* HERO VISUAL */
         .hero {
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
-            padding-top: 12rem;
-            gap: 3rem;
+            padding-top: 13rem; /* Un poco más de aire */
+            padding-bottom: 10rem;
+            gap: 2.5rem;
             border-bottom: none;
         }
 
         .hero-title {
             font-family: 'Instrument Serif', serif;
-            font-size: clamp(3.5rem, 8vw, 7rem);
-            line-height: 0.9;
+            font-size: clamp(3.5rem, 8vw, 7.5rem);
+            line-height: 0.95;
             font-weight: 400;
-            max-width: 900px;
+            max-width: 1000px;
+            color: var(--text-color);
         }
 
         .hero-title i {
@@ -118,14 +152,15 @@
         }
         
         .hero-subtitle {
-            font-size: 1rem;
-            letter-spacing: 0.15em;
+            font-size: 0.95rem;
+            letter-spacing: 0.2em;
             text-transform: uppercase;
             color: var(--muted-color);
+            font-weight: 500;
             margin-top: 1rem;
         }
 
-        /* PROYECTOS - GALERÍA CON GRADIENTES */
+        /* PROYECTOS - GALERÍA CON GRADIENTES RELAJADOS */
         .projects-section {
             padding-top: 2rem;
             border-bottom: none;
@@ -134,108 +169,133 @@
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 4rem 2rem;
+            gap: 5rem 3rem; /* Más espacio entre proyectos para respirar */
         }
 
         .project-card {
             display: block;
+            opacity: 0;
+            animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-play-state: paused; /* Se podría activar con JS, pero lo simularemos activo */
+            animation-play-state: running; 
         }
 
         .project-thumb {
             position: relative;
             aspect-ratio: 16 / 10;
             background-color: var(--surface-color);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
+            border-radius: 12px;
             overflow: hidden;
-            margin-bottom: 1.2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2); /* Sombra más pronunciada para modo oscuro */
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
         }
 
-        .project-thumb .thumb-fill {
+        .project-card:hover .project-thumb {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        /* Imágenes de miniatura en lugar de gradientes */
+        .project-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
             position: absolute;
             inset: 0;
-            transition: transform 0.6s ease;
+            transition: transform 0.7s ease, opacity 0.4s ease;
+            opacity: 0.75; /* Ligeramente atenuadas para que no resalten demasiado hasta el hover */
         }
 
-        .project-card:hover .thumb-fill {
-            transform: scale(1.04);
+        .project-card:hover img {
+            transform: scale(1.05);
+            opacity: 1; /* Brillo completo al pasar el mouse */
         }
-
-        .thumb-1 { background: linear-gradient(135deg, #d0e1fd 0%, #b3d1ff 70%, #80b3ff 100%); } /* Selva Sena */
-        .thumb-2 { background: linear-gradient(135deg, #e1ecf4 0%, #c6e0f5 100%); } /* Respeto Irrestricto */
-        .thumb-3 { background: linear-gradient(135deg, #d8dee9 0%, #e5e9f0 100%); } /* La madre de Ernesto */
-        .thumb-4 { background: linear-gradient(135deg, #e3eaf2 0%, #cce0ff 100%); } /* Botas Walker */
 
         .project-thumb .play {
             position: absolute;
             left: 50%;
             top: 50%;
-            width: 64px;
-            height: 64px;
-            margin: -32px 0 0 -32px;
-            background-color: rgba(255, 255, 255, 0.9);
-            border: 1px solid var(--border-color);
+            width: 72px;
+            height: 72px;
+            margin: -36px 0 0 -36px;
+            background-color: rgba(26, 25, 24, 0.7); /* Fondo oscuro translúcido */
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.1);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: border-color 0.3s ease, background-color 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            opacity: 0.9;
         }
 
         .project-thumb .play::after {
             content: '';
             border-style: solid;
-            border-width: 8px 0 8px 13px;
-            border-color: transparent transparent transparent var(--accent-color);
-            margin-left: 4px;
+            border-width: 9px 0 9px 15px;
+            border-color: transparent transparent transparent var(--text-color); /* Triángulo claro */
+            margin-left: 5px;
+            transition: border-color 0.3s ease;
         }
 
         .project-card:hover .play {
+            background-color: var(--accent-color);
             border-color: var(--accent-color);
-            background-color: #ffffff;
+            transform: scale(1.1);
+            opacity: 1;
+        }
+
+        .project-card:hover .play::after {
+            border-color: transparent transparent transparent var(--bg-color); /* Triángulo oscuro al hover */
         }
 
         .project-meta {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 0.6rem;
         }
 
         .project-title {
             font-size: 1.8rem;
-            line-height: 1.1;
-            font-weight: 500;
+            line-height: 1.2;
+            font-weight: 400;
+            color: var(--text-color);
+            transition: color 0.3s ease;
         }
 
         .project-card:hover .project-title {
-            color: var(--accent-color);
+            color: var(--accent-hover);
         }
 
         .project-info {
-            font-size: 0.8rem;
-            letter-spacing: 0.1em;
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
             text-transform: uppercase;
             color: var(--accent-color);
+            font-weight: 600;
         }
         
         .project-desc {
-            font-size: 0.95rem;
+            font-size: 1rem;
             color: var(--muted-color);
             max-width: 95%;
+            line-height: 1.7;
         }
 
         /* CASO DE ESTUDIO (Gestión de Producción) */
         .case-study {
-            background-color: #ffffff;
-            border-radius: 8px;
-            padding: 4rem;
-            margin: 6rem 0;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.03);
+            background-color: var(--surface-color); /* Usamos el color de superficie oscuro */
+            border-radius: 16px;
+            padding: 5rem;
+            margin: 4rem 0 2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
             border: 1px solid var(--border-color);
         }
 
         .case-header {
-            margin-bottom: 3rem;
+            margin-bottom: 4rem;
             text-align: center;
         }
 
@@ -244,67 +304,78 @@
             letter-spacing: 0.2em;
             text-transform: uppercase;
             color: var(--accent-color);
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             font-weight: 600;
         }
 
         .case-title {
             font-family: 'Instrument Serif', serif;
-            font-size: clamp(2.5rem, 4vw, 3.5rem);
-            line-height: 1;
+            font-size: clamp(2.5rem, 4vw, 3.8rem);
+            line-height: 1.1;
+            color: var(--text-color);
         }
 
         .budget-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 2rem;
-            margin-bottom: 3rem;
+            margin-bottom: 4rem;
         }
 
         .budget-stat {
-            background-color: var(--surface-color);
-            padding: 2rem;
-            border-radius: 6px;
+            background-color: var(--bg-color);
+            padding: 2.5rem 2rem;
+            border-radius: 12px;
             text-align: center;
+            border: 1px solid var(--surface-color);
+            transition: transform 0.3s ease;
+        }
+
+        .budget-stat:hover {
+            transform: translateY(-5px);
         }
 
         .stat-value {
-            font-size: 2rem;
-            font-weight: 500;
-            color: var(--text-color);
+            font-family: 'Instrument Serif', serif;
+            font-size: 3rem;
+            color: var(--accent-color);
             margin-bottom: 0.5rem;
+            line-height: 1;
         }
 
         .stat-label {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--muted-color);
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.1em;
+            font-weight: 500;
         }
 
         .budget-bars {
             display: flex;
             flex-direction: column;
-            gap: 1.5rem;
+            gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
         }
 
         .bar-item {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 0.8rem;
         }
 
         .bar-label-group {
             display: flex;
             justify-content: space-between;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             color: var(--text-color);
             font-weight: 500;
         }
 
         .bar-bg {
             width: 100%;
-            height: 12px;
+            height: 8px; /* Barras más finas y elegantes */
             background-color: var(--surface-color);
             border-radius: 10px;
             overflow: hidden;
@@ -314,37 +385,86 @@
             height: 100%;
             background-color: var(--accent-color);
             border-radius: 10px;
+            transform-origin: left;
+            animation: scaleX 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
         
-        .bar-fill.eq { background-color: #4a8ddb; }
-        .bar-fill.cat { background-color: #8bbff4; }
+        @keyframes scaleX {
+            from { transform: scaleX(0); }
+            to { transform: scaleX(1); }
+        }
+        
+        /* Modificadores de color para las barras de presupuesto basados en la nueva paleta */
+        .bar-fill.eq { background-color: #6a7857; } /* Variación del salvia */
+        .bar-fill.cat { background-color: #4f5941; } /* Variación más oscura */
 
-        /* CONTACTO (Visual) */
+        /* CONTACTO */
         .contact {
             text-align: center;
             border-bottom: none;
-            padding-top: 4rem;
+            padding-top: 6rem;
+            padding-bottom: 8rem;
         }
 
         .contact .section-title {
             font-size: clamp(3rem, 7vw, 6rem);
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
+            font-family: 'Instrument Serif', serif;
+            color: var(--text-color);
         }
 
         .contact-mail {
             display: inline-block;
             font-family: 'Instrument Serif', serif;
             font-style: italic;
-            font-size: clamp(2rem, 4vw, 3rem);
+            font-size: clamp(2rem, 4.5vw, 3.5rem);
             color: var(--accent-color);
-            border-bottom: 2px solid var(--accent-color);
+            border-bottom: 2px solid transparent; /* Efecto más limpio que la línea fija */
+            padding-bottom: 5px;
             margin-bottom: 4rem;
-            transition: color 0.3s, border-color 0.3s;
+            position: relative;
+        }
+
+        .contact-mail::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--accent-color);
+            transform: scaleX(0.3);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .contact-mail:hover {
+            color: var(--accent-hover);
+        }
+
+        .contact-mail:hover::after {
+            transform: scaleX(1);
+            background-color: var(--accent-hover);
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .social-links a {
+            color: var(--muted-color);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-size: 0.8rem;
+            position: relative;
+            padding-bottom: 4px;
+        }
+
+        .social-links a:hover {
             color: var(--text-color);
-            border-color: var(--text-color);
         }
 
         footer {
@@ -364,12 +484,14 @@
         @media (max-width: 900px) {
             .budget-grid {
                 grid-template-columns: 1fr;
+                gap: 1.5rem;
             }
             .case-study {
-                padding: 2rem;
+                padding: 3rem 2rem;
             }
             .projects-grid {
                 grid-template-columns: 1fr;
+                gap: 4rem;
             }
         }
 
@@ -377,14 +499,19 @@
             .nav-container {
                 padding: 1.2rem;
                 flex-direction: column;
-                gap: 0.8rem;
+                gap: 1rem;
             }
             .hero {
-                padding-top: 9rem;
+                padding-top: 10rem;
+                padding-bottom: 6rem;
+            }
+            .contact {
+                padding-top: 4rem;
+                padding-bottom: 5rem;
             }
             footer {
                 flex-direction: column;
-                gap: 1rem;
+                gap: 1.5rem;
                 text-align: center;
             }
         }
@@ -405,18 +532,18 @@
     <main>
         <!-- HERO VISUAL -->
         <section class="hero" id="inicio">
-            <h1 class="hero-title">Producción, <i>gestión</i> y montaje audiovisual</h1>
-            <p class="hero-subtitle">Dirección · Project Management · Postproducción</p>
+            <h1 class="hero-title animate-on-load">Producción, <i>gestión</i> y montaje audiovisual</h1>
+            <p class="hero-subtitle animate-on-load delay-1">Dirección · Project Management · Postproducción</p>
         </section>
 
-        <!-- PROYECTOS - GALERÍA (Formato Miniaturas) -->
+        <!-- PROYECTOS - GALERÍA -->
         <section id="proyectos" class="projects-section">
             <div class="projects-grid">
                 
                 <!-- Proyecto 1: Selva Sena -->
-                <a href="https://www.youtube.com/watch?v=Hqn_BkR9i1s" target="_blank" rel="noopener" class="project-card">
+                <a href="https://www.youtube.com/watch?v=Hqn_BkR9i1s" target="_blank" rel="noopener" class="project-card delay-1">
                     <div class="project-thumb">
-                        <div class="thumb-fill thumb-1"></div>
+                        <img src="https://img.youtube.com/vi/Hqn_BkR9i1s/maxresdefault.jpg" alt="Retrato Documental - Selva Sena">
                         <span class="play"></span>
                     </div>
                     <div class="project-meta">
@@ -427,9 +554,9 @@
                 </a>
 
                 <!-- Proyecto 2: Respeto Irrestricto -->
-                <a href="https://www.youtube.com/watch?v=Y72ZDaXrDQA" target="_blank" rel="noopener" class="project-card">
+                <a href="https://www.youtube.com/watch?v=Y72ZDaXrDQA" target="_blank" rel="noopener" class="project-card delay-2">
                     <div class="project-thumb">
-                        <div class="thumb-fill thumb-2"></div>
+                        <img src="https://img.youtube.com/vi/Y72ZDaXrDQA/maxresdefault.jpg" alt="Respeto Irrestricto">
                         <span class="play"></span>
                     </div>
                     <div class="project-meta">
@@ -440,9 +567,9 @@
                 </a>
 
                 <!-- Proyecto 3: La madre de Ernesto -->
-                <a href="https://www.youtube.com/watch?v=ept4sCq83Y8" target="_blank" rel="noopener" class="project-card">
+                <a href="https://www.youtube.com/watch?v=ept4sCq83Y8" target="_blank" rel="noopener" class="project-card delay-3">
                     <div class="project-thumb">
-                        <div class="thumb-fill thumb-3"></div>
+                        <img src="https://img.youtube.com/vi/ept4sCq83Y8/hqdefault.jpg" alt="La madre de Ernesto">
                         <span class="play"></span>
                     </div>
                     <div class="project-meta">
@@ -452,10 +579,10 @@
                     </div>
                 </a>
 
-                <!-- Proyecto 4: Oficios y manipulación (NUEVO) -->
-                <a href="https://www.youtube.com/watch?v=JJDHQhziA6k" target="_blank" rel="noopener" class="project-card">
+                <!-- Proyecto 4: Oficios y manipulación -->
+                <a href="https://www.youtube.com/watch?v=JJDHQhziA6k" target="_blank" rel="noopener" class="project-card delay-1">
                     <div class="project-thumb">
-                        <div class="thumb-fill thumb-4"></div>
+                        <img src="https://img.youtube.com/vi/JJDHQhziA6k/maxresdefault.jpg" alt="Fabricación de botas walker">
                         <span class="play"></span>
                     </div>
                     <div class="project-meta">
@@ -469,8 +596,8 @@
         </section>
 
         <!-- CASO DE ESTUDIO: GESTIÓN DE PRODUCCIÓN -->
-        <section id="gestion">
-            <div class="case-study">
+        <section id="gestion" style="border-bottom: none;">
+            <div class="case-study animate-on-load delay-2">
                 <div class="case-header">
                     <p class="case-label">Caso de Estudio</p>
                     <h2 class="case-title">Gestión de Producción y <i>Estructura de Costos</i></h2>
@@ -527,15 +654,19 @@
             <h2 class="section-title">¿Hablamos?</h2>
             <a href="mailto:vic.mxc@hotmail.com" class="contact-mail">vic.mxc@hotmail.com</a>
             
-            <div style="display: flex; justify-content: center; gap: 2rem; margin-top: 2rem;">
-                <a href="https://www.linkedin.com/in/mvcarril/" target="_blank" rel="noopener" style="color: var(--text-color); font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.85rem;">LinkedIn</a>
-                <a href="https://www.youtube.com/@vicmaxacre" target="_blank" rel="noopener" style="color: var(--text-color); font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.85rem;">YouTube</a>
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/mvcarril/" target="_blank" rel="noopener">LinkedIn</a>
+                <a href="https://www.youtube.com/@vicmaxacre" target="_blank" rel="noopener">YouTube</a>
             </div>
         </section>
     </main>
 
     <footer>
         <span>© 2026 Victoria MXC</span>
+        <span>Portfolio Audiovisual</span>
+    </footer>
+</body>
+</html>
         <span>Portfolio · Project Management & Producción Audiovisual</span>
     </footer>
 </body>
